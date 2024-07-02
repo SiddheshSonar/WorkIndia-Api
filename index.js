@@ -126,7 +126,11 @@ router.get('/car/get-rides?', async (req, res) => {
     // console.log(origin, destination, category, required_hours)
     const cars = await getCar(origin);
     const filteredCars = cars.filter(car => car.category === category);
-    res.status(200).json({ status: 'Cars fetched successfully', status_code: 200, cars: filteredCars, total_payable_amt: filteredCars[0].rent_per_hr * required_hours });
+    const withRent = filteredCars.map(car => {
+        const rent = car.rent_per_hr * required_hours;
+        return { ...car, total_payable_amt: rent }
+    })
+    res.status(200).json({ status: 'Cars fetched successfully', status_code: 200, cars: withRent });
 
 });
 
