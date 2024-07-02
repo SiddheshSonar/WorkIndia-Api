@@ -108,7 +108,7 @@ router.post('/car/create', async (req, res) => {
 
 const getCar = (origin) => {
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT * FROM Cars WHERE current_city = '${origin}';`,
+        connection.query(`SELECT * FROM Cars WHERE current_city = ${origin};`,
             function (err, result) {
                 if (err)
                     reject(err)
